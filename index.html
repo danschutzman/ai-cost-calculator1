@@ -1,3 +1,19 @@
+Attachment Janus Oracle AI and Cloud Services_ Pricing, Security, and Integration for Business Solutions-Transcript.docx added.None selected 
+
+Skip to content
+Using Gmail with screen readers
+1 of 429
+Re:
+Inbox
+
+Dan Schutzman <dan.schutzman@gmail.com>
+Attachments
+12:26 PM (0 minutes ago)
+to me
+
+
+
+On Thu, Sep 10, 2026 at 12:19 PM Dan Schutzman <dan.schutzman@gmail.com> wrote:
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -165,3 +181,450 @@
     </script>
 </body>
 </html>
+
+On Thu, Sep 10, 2026 at 11:57 AM Dan Schutzman <dan.schutzman@gmail.com> wrote:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI TCO Sankey Estimator</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            gap: 40px;
+        }
+        .controls {
+            flex: 1;
+            min-width: 300px;
+        }
+        .visualization {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h2 { margin-top: 0; color: #39FF14; }
+        label { display: block; margin-top: 20px; font-weight: bold; color: #aaaaaa; }
+        input[type="range"] {
+            width: 100%;
+            margin-top: 10px;
+            accent-color: #39FF14;
+        }
+        .value-display {
+            font-size: 1.2rem;
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .total-cost {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        #sankey_chart {
+            width: 100%;
+            height: 350px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="controls">
+            <h2>AI Cost Parameters</h2>
+           
+            <label>Monthly API/Tokens (Inference)</label>
+            <div class="value-display">$<span id="tokenValTxt">5000</span></div>
+            <input type="range" id="tokenSlider" min="0" max="50000" step="500" value="5000">
+
+            <label>Monthly Infrastructure (Compute/Storage)</label>
+            <div class="value-display">$<span id="infraValTxt">15000</span></div>
+            <input type="range" id="infraSlider" min="0" max="50000" step="500" value="15000">
+
+            <label>Monthly Governance & Tooling</label>
+            <div class="value-display">$<span id="govValTxt">2000</span></div>
+            <input type="range" id="govSlider" min="0" max="15000" step="500" value="2000">
+        </div>
+
+        <div class="visualization">
+            <div id="sankey_chart"></div>
+            <div class="total-cost">Total Monthly TCO:<br>$<span id="totalValTxt">22000</span></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // Load the Google Sankey package
+        google.charts.load('current', {'packages':['sankey']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        const tokenSlider = document.getElementById('tokenSlider');
+        const infraSlider = document.getElementById('infraSlider');
+        const govSlider = document.getElementById('govSlider');
+       
+        const tokenValTxt = document.getElementById('tokenValTxt');
+        const infraValTxt = document.getElementById('infraValTxt');
+        const govValTxt = document.getElementById('govValTxt');
+        const totalValTxt = document.getElementById('totalValTxt');
+
+        function drawChart() {
+            const tokenCost = parseInt(tokenSlider.value);
+            const infraCost = parseInt(infraSlider.value);
+            const govCost = parseInt(govSlider.value);
+            const totalCost = tokenCost + infraCost + govCost;
+
+            // Update text labels
+            tokenValTxt.textContent = tokenCost.toLocaleString();
+            infraValTxt.textContent = infraCost.toLocaleString();
+            govValTxt.textContent = govCost.toLocaleString();
+            totalValTxt.textContent = totalCost.toLocaleString();
+
+            // Build Sankey Data
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'From');
+            data.addColumn('string', 'To');
+            data.addColumn('number', 'Cost');
+            data.addRows([
+                ['Total AI Budget', 'API/Tokens', tokenCost || 1], // fallback to 1 to prevent chart crashing on zero
+                ['Total AI Budget', 'Infrastructure', infraCost || 1],
+                ['Total AI Budget', 'Governance', govCost || 1]
+            ]);
+
+            // Configure styling to match dark mode
+            var options = {
+                backgroundColor: 'transparent',
+                sankey: {
+                    node: {
+                        label: { color: '#ffffff', fontSize: 14, bold: true },
+                        colors: ['#ffffff', '#39FF14', '#007FFF', '#FF007F'],
+                        nodePadding: 40,
+                        width: 10
+                    },
+                    link: {
+                        colorMode: 'gradient'
+                    }
+                }
+            };
+
+            var chart = new google.visualization.Sankey(document.getElementById('sankey_chart'));
+            chart.draw(data, options);
+        }
+
+        // Add event listeners to redraw chart smoothly as sliders move
+        tokenSlider.addEventListener('input', drawChart);
+        infraSlider.addEventListener('input', drawChart);
+        govSlider.addEventListener('input', drawChart);
+    </script>
+</body>
+</html>
+
+ One attachment
+  •  Scanned by Gmail
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive AI TCO Configurator</title>
+    <!-- Chart.js for dynamic visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-blue: #0078d4;
+            --color-tokens: #0078d4;
+            --color-infra: #d13438;
+            --color-network: #881798;
+            --color-gov: #ffb900;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 1100px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .controls-section {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .chart-section {
+            flex: 1.5;
+            min-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 24px;
+            width: 100%;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            background-color: #2d2d2d;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+            accent-color: var(--accent-blue);
+        }
+
+        .percentage-badge {
+            background: #333;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+        }
+
+        .insight-box {
+            margin-top: 30px;
+            background-color: rgba(0, 120, 212, 0.1);
+            border-left: 4px solid var(--accent-blue);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <h1>AI TCO Architecture Configurator</h1>
+        
+        <!-- INTERACTIVE CONTROLS -->
+        <div class="controls-section">
+            <div class="form-group">
+                <label for="presetSelect">Architecture Preset</label>
+                <select id="presetSelect">
+                    <option value="saas">Oracle Fusion SaaS AI (Managed)</option>
+                    <option value="custom">Custom Build / On-Premise</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>API & Token Costs <span class="percentage-badge" id="lbl-tokens">85%</span></label>
+                <input type="range" id="slide-tokens" min="0" max="100" value="85">
+            </div>
+
+            <div class="form-group">
+                <label>Infrastructure (Compute/Storage) <span class="percentage-badge" id="lbl-infra">0%</span></label>
+                <input type="range" id="slide-infra" min="0" max="100" value="0">
+            </div>
+
+            <div class="form-group">
+                <label>Networking & Data Pipelines <span class="percentage-badge" id="lbl-network">5%</span></label>
+                <input type="range" id="slide-network" min="0" max="100" value="5">
+            </div>
+
+            <div class="form-group">
+                <label>Governance & FinOps Tooling <span class="percentage-badge" id="lbl-gov">10%</span></label>
+                <input type="range" id="slide-gov" min="0" max="100" value="10">
+            </div>
+        </div>
+
+        <!-- DYNAMIC VISUALIZATION -->
+        <div class="chart-section">
+            <div class="chart-container">
+                <canvas id="tcoPieChart"></canvas>
+            </div>
+            <div class="insight-box" id="dynamicInsight">
+                <strong>Insight:</strong> In a SaaS model, API and Token consumption drives the vast majority of the total cost, eliminating heavy capital expenditure on infrastructure.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const presetSelect = document.getElementById('presetSelect');
+        const sliders = {
+            tokens: document.getElementById('slide-tokens'),
+            infra: document.getElementById('slide-infra'),
+            network: document.getElementById('slide-network'),
+            gov: document.getElementById('slide-gov')
+        };
+        const labels = {
+            tokens: document.getElementById('lbl-tokens'),
+            infra: document.getElementById('lbl-infra'),
+            network: document.getElementById('lbl-network'),
+            gov: document.getElementById('lbl-gov')
+        };
+        const dynamicInsight = document.getElementById('dynamicInsight');
+
+        // Presets for the dropdown
+        const presets = {
+            saas: { tokens: 85, infra: 0, network: 5, gov: 10 },
+            custom: { tokens: 15, infra: 55, network: 20, gov: 10 }
+        };
+
+        // Initialize Chart.js Doughnut Chart
+        const ctx = document.getElementById('tcoPieChart').getContext('2d');
+        let tcoChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Tokens / API', 'Infrastructure', 'Networking', 'Governance'],
+                datasets: [{
+                    data: [85, 0, 5, 10],
+                    backgroundColor: ['#0078d4', '#d13438', '#881798', '#ffb900'],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '65%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#ffffff', padding: 20, font: { size: 14 } }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ' ' + context.label + ': ' + context.raw + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Math logic to calculate normalized percentages (ensuring they always equal 100%)
+        function updateCalculator() {
+            let rawTokens = parseInt(sliders.tokens.value);
+            let rawInfra = parseInt(sliders.infra.value);
+            let rawNetwork = parseInt(sliders.network.value);
+            let rawGov = parseInt(sliders.gov.value);
+
+            let total = rawTokens + rawInfra + rawNetwork + rawGov;
+            
+            // Prevent division by zero
+            if (total === 0) {
+                rawTokens = 1; total = 1; 
+            }
+
+            // Calculate actual percentages
+            let pctTokens = Math.round((rawTokens / total) * 100);
+            let pctInfra = Math.round((rawInfra / total) * 100);
+            let pctNetwork = Math.round((rawNetwork / total) * 100);
+            
+            // Force math to exactly 100% by adjusting the last variable (Governance)
+            let pctGov = 100 - (pctTokens + pctInfra + pctNetwork);
+
+            // Update UI Labels
+            labels.tokens.innerText = pctTokens + '%';
+            labels.infra.innerText = pctInfra + '%';
+            labels.network.innerText = pctNetwork + '%';
+            labels.gov.innerText = pctGov + '%';
+
+            // Update Chart Data
+            tcoChart.data.datasets[0].data = [pctTokens, pctInfra, pctNetwork, pctGov];
+            tcoChart.update();
+
+            // Update dynamic text based on infrastructure weight
+            if (pctInfra > 30) {
+                dynamicInsight.innerHTML = "<strong>Insight:</strong> Custom builds shift the financial burden heavily toward hidden infrastructure and massive data networking requirements. Token cost is only a small fraction of the true TCO.";
+            } else {
+                dynamicInsight.innerHTML = "<strong>Insight:</strong> In a SaaS model, API and Token consumption drives the vast majority of the total cost, minimizing capital expenditure on hardware and networking.";
+            }
+        }
+
+        // Event Listeners for Sliders
+        Object.values(sliders).forEach(slider => {
+            slider.addEventListener('input', () => {
+                presetSelect.value = "custom"; // Disconnect from preset if manually moved
+                updateCalculator();
+            });
+        });
+
+        // Event Listener for Preset Dropdown
+        presetSelect.addEventListener('change', (e) => {
+            const selection = presets[e.target.value];
+            sliders.tokens.value = selection.tokens;
+            sliders.infra.value = selection.infra;
+            sliders.network.value = selection.network;
+            sliders.gov.value = selection.gov;
+            updateCalculator();
+        });
+
+        // Initial paint
+        updateCalculator();
+    </script>
+</body>
+</html>
+gemini-code-1789057570732.html
+Displaying gemini-code-1789057570732.html.
