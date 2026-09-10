@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI TCO Estimator</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -21,15 +21,16 @@
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.5);
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             display: flex;
             gap: 40px;
         }
         .controls {
             flex: 1;
+            min-width: 300px;
         }
         .visualization {
-            flex: 1;
+            flex: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -54,6 +55,10 @@
             font-weight: bold;
             text-align: center;
         }
+        #sankey_chart {
+            width: 100%;
+            height: 350px;
+        }
     </style>
 </head>
 <body>
@@ -61,73 +66,87 @@
     <div class="container">
         <div class="controls">
             <h2>AI Cost Parameters</h2>
-            
-            <label>Monthly Token/API Spend (Inference)</label>
-            <div class="value-display">$<span id="tokenVal">5000</span></div>
+           
+            <label>Monthly API/Tokens (Inference)</label>
+            <div class="value-display">$<span id="tokenValTxt">5000</span></div>
             <input type="range" id="tokenSlider" min="0" max="50000" step="500" value="5000">
 
             <label>Monthly Infrastructure (Compute/Storage)</label>
-            <div class="value-display">$<span id="infraVal">15000</span></div>
+            <div class="value-display">$<span id="infraValTxt">15000</span></div>
             <input type="range" id="infraSlider" min="0" max="50000" step="500" value="15000">
 
-            <label>Monthly Governance & Tooling (FinOps)</label>
-            <div class="value-display">$<span id="govVal">2000</span></div>
+            <label>Monthly Governance & Tooling</label>
+            <div class="value-display">$<span id="govValTxt">2000</span></div>
             <input type="range" id="govSlider" min="0" max="15000" step="500" value="2000">
         </div>
 
         <div class="visualization">
-            <canvas id="costChart"></canvas>
-            <div class="total-cost">Total Monthly TCO:<br>$<span id="totalVal">22000</span></div>
+            <div id="sankey_chart"></div>
+            <div class="total-cost">Total Monthly TCO:<br>$<span id="totalValTxt">22000</span></div>
         </div>
     </div>
 
-    <script>
+    <script type="text/javascript">
+        // Load the Google Sankey package
+        google.charts.load('current', {'packages':['sankey']});
+        google.charts.setOnLoadCallback(drawChart);
+
         const tokenSlider = document.getElementById('tokenSlider');
         const infraSlider = document.getElementById('infraSlider');
         const govSlider = document.getElementById('govSlider');
-        
-        const tokenVal = document.getElementById('tokenVal');
-        const infraVal = document.getElementById('infraVal');
-        const govVal = document.getElementById('govVal');
-        const totalVal = document.getElementById('totalVal');
+       
+        const tokenValTxt = document.getElementById('tokenValTxt');
+        const infraValTxt = document.getElementById('infraValTxt');
+        const govValTxt = document.getElementById('govValTxt');
+        const totalValTxt = document.getElementById('totalValTxt');
 
-        const ctx = document.getElementById('costChart').getContext('2d');
-        let costChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Token/API Costs', 'Infrastructure Costs', 'Governance Tools'],
-                datasets: [{
-                    data: [5000, 15000, 2000],
-                    backgroundColor: ['#39FF14', '#007FFF', '#FF007F'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'bottom', labels: { color: '#ffffff' } }
+        function drawChart() {
+            const tokenCost = parseInt(tokenSlider.value);
+            const infraCost = parseInt(infraSlider.value);
+            const govCost = parseInt(govSlider.value);
+            const totalCost = tokenCost + infraCost + govCost;
+
+            // Update text labels
+            tokenValTxt.textContent = tokenCost.toLocaleString();
+            infraValTxt.textContent = infraCost.toLocaleString();
+            govValTxt.textContent = govCost.toLocaleString();
+            totalValTxt.textContent = totalCost.toLocaleString();
+
+            // Build Sankey Data
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'From');
+            data.addColumn('string', 'To');
+            data.addColumn('number', 'Cost');
+            data.addRows([
+                ['Total AI Budget', 'API/Tokens', tokenCost || 1], // fallback to 1 to prevent chart crashing on zero
+                ['Total AI Budget', 'Infrastructure', infraCost || 1],
+                ['Total AI Budget', 'Governance', govCost || 1]
+            ]);
+
+            // Configure styling to match dark mode
+            var options = {
+                backgroundColor: 'transparent',
+                sankey: {
+                    node: {
+                        label: { color: '#ffffff', fontSize: 14, bold: true },
+                        colors: ['#ffffff', '#39FF14', '#007FFF', '#FF007F'],
+                        nodePadding: 40,
+                        width: 10
+                    },
+                    link: {
+                        colorMode: 'gradient'
+                    }
                 }
-            }
-        });
+            };
 
-        function updateValues() {
-            const token = parseInt(tokenSlider.value);
-            const infra = parseInt(infraSlider.value);
-            const gov = parseInt(govSlider.value);
-            const total = token + infra + gov;
-
-            tokenVal.textContent = token.toLocaleString();
-            infraVal.textContent = infra.toLocaleString();
-            govVal.textContent = gov.toLocaleString();
-            totalVal.textContent = total.toLocaleString();
-
-            costChart.data.datasets[0].data = [token, infra, gov];
-            costChart.update();
+            var chart = new google.visualization.Sankey(document.getElementById('sankey_chart'));
+            chart.draw(data, options);
         }
 
-        tokenSlider.addEventListener('input', updateValues);
-        infraSlider.addEventListener('input', updateValues);
-        govSlider.addEventListener('input', updateValues);
+        // Add event listeners to redraw chart smoothly as sliders move
+        tokenSlider.addEventListener('input', drawChart);
+        infraSlider.addEventListener('input', drawChart);
+        govSlider.addEventListener('input', drawChart);
     </script>
 </body>
 </html>
